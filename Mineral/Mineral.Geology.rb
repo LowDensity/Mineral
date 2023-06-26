@@ -1,5 +1,6 @@
 require 'Pathname'
 #Geology 參數解讀器
+p 'Geology Version 0.2.0'
 module Mineral
     
     #共用的指出這個Mineral有甚麼功能的地方。
@@ -48,9 +49,8 @@ module Mineral
             @base = @argmap["base"].nil?	?	nil	:	@argmap["base"][0].gsub(/\\+/, '/')
             @tgt =  @argmap["tgt"].nil?		?	nil	:	@argmap["tgt"][0].gsub(/\\+/, '/')
             @vein = @argmap["vein"].nil?	?	nil	:	@argmap["vein"][0].gsub(/\\+/, '/')
-            @veinless =  !@argmap["veinless"].nil?
-            p "@vein = #{@vein}"
-            raise "option : -veinless is not implemented" if @veinless
+            raise "option : -veinless is not implemented" if !@argmap["veinless"].nil? 
+            @veinless =  false #尚未實作前先強制false
         end 
 
         #檢查指定的資料夾是否存在，如果不存在，是否要建立。

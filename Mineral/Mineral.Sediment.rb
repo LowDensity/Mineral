@@ -1,4 +1,6 @@
 require 'Pathname'
+
+p 'Sediment VERSION 0.2.0'
 module Mineral
 
     actions.push(:sediment)
@@ -11,8 +13,8 @@ module Mineral
 		# 製作tgt資料夾。
 		base= Pathname.new(geo.base)
 		tgt_dir	= base.parent if geo.tgt.nil?
-		tgt_count = Dir.glob(File.join(tgt_dir,"*")).select{|d|File.directory? d}.length
-		tgt_dir	=File.join(tgt_dir,"#{base.basename}_#{Time.now.strftime("%Y%m%d")}_更新") 
+		tgt_count = Dir.glob(File.join(tgt_dir,"*#{Time.now.strftime("%Y%m%d")}*")).select{|d|File.directory? d}.length
+		tgt_dir	=File.join(tgt_dir,"#{Time.now.strftime("%Y%m%d")}_更新") 
 		tgt_dir = tgt_dir + "#{tgt_count+1}" if tgt_count >0
 		
 		p "base => #{geo.base} , tgt => #{tgt_dir}"

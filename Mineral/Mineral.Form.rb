@@ -1,6 +1,6 @@
 require 'fileutils'
 require 'Pathname'
-
+p 'Form VERSION 0.2.0'
 module Mineral
         
     @@actions.push(:form)
