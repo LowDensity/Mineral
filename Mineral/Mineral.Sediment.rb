@@ -3,7 +3,7 @@ require 'Pathname'
 
 module Mineral
 
-	print_version("Mineral.Sediment.rb",0,2,0)
+	print_version("Mineral.Sediment.rb",0,2,1)
     actions.push(:sediment)
 
 
