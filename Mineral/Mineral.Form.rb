@@ -1,7 +1,10 @@
 require 'fileutils'
 require 'Pathname'
-p 'Form VERSION 0.2.0'
+
+
 module Mineral
+
+    print_version "Mineral.Form.rb" , 0 , 2 , 1
         
     @@actions.push(:form)
     def self.form(geo)
@@ -19,7 +22,10 @@ module Mineral
 		vein_base =  File.join(tgt_path.parent,'Vein')
 	end
 	
-	p "forming -base #{geo.base} , tgt = #{tgt_dir} , vein = #{vein_base}"
+	puts 'forming'
+    puts "base =#{geo.base}"
+    puts "tgt  = #{tgt_dir}"
+    puts "vein = #{vein_base}"
 	
 	
 	
@@ -58,7 +64,7 @@ module Mineral
 	# 這邊最多建立兩層，第一層是 yyyyMMdd，第二層是 yyyyMMdd / added | changed | deleted
     geo.surveil(dirs_tosurveil,true,4)
     
-    p "process added files"
+    puts "process added files"
     count =0
     base_only.each{
         |ent|
@@ -68,7 +74,7 @@ module Mineral
     }
 	print "\r\n"
     
-    p "process changed files"
+    puts "process changed files"
     count=0
     change_entries.each{
         |ent|
@@ -80,7 +86,7 @@ module Mineral
     }
     print "\r\n"
     
-    p "process deleted files"
+    puts "process deleted files"
     count=0
     tgt_only.each{
         |ent|
@@ -90,7 +96,7 @@ module Mineral
         FileUtils.rm(tgt_ent)
     }
     print "\r\n"
-    p "done"
+    puts "done"
     
     end
 end

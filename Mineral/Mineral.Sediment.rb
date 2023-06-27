@@ -1,8 +1,9 @@
 require 'Pathname'
 
-p 'Sediment VERSION 0.2.0'
+
 module Mineral
 
+	print_version("Mineral.Sediment.rb",0,2,0)
     actions.push(:sediment)
 
 
@@ -17,10 +18,12 @@ module Mineral
 		tgt_dir	=File.join(tgt_dir,"#{Time.now.strftime("%Y%m%d")}_更新") 
 		tgt_dir = tgt_dir + "#{tgt_count+1}" if tgt_count >0
 		
-		p "base => #{geo.base} , tgt => #{tgt_dir}"
+		puts "base => #{geo.base}" 
+		puts "tgt => #{tgt_dir}"
 		# 這邊設定最多10層以提高操作靈活度。
 		geo.surveil([tgt_dir],true,10)
 		# 無腦全部copy 過去。
+		puts 'copying file'
 		count=0
 		base_entries.each{
         |ent|

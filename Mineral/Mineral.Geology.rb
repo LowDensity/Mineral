@@ -1,22 +1,8 @@
 require 'Pathname'
 #Geology 參數解讀器
-p 'Geology Version 0.2.0'
 module Mineral
-    
-    #共用的指出這個Mineral有甚麼功能的地方。
-    @@actions = []
-    def self.actions 
-         @@actions
-    end
 
-    def self.print_counter(count)
-		print "*"		if count!=0 && count % 10==0
-		print "\r\n"	if count!=0 && count % 100==0
-		print '-'
-		count+=1
-    end
-
-
+    print_version("Mineral.Geology.rb",0,2,0)
     #Mineral專用的參數讀取器
     class Geology
         attr_reader :action     #要執行的動作
@@ -38,7 +24,7 @@ module Mineral
             cur_key = ""
             for i in 0...args.length
                 arg = args[i]
-                next argmap[cur_key=/\w+/.match(arg)[0]] = [] if(/-\w+/.match?(arg))
+                next argmap[cur_key=/\w+/.match(arg)[0]] = [] if(/^-\w+$/.match?(arg))
                 argmap[cur_key].push(arg)
             end
             argmap.select{|arx| arx.length!=0}
@@ -66,7 +52,7 @@ module Mineral
         #            當下資料夾結構： D:\AA，foundation = 1
         #            則：因為以當下狀況，會需要建立BB、CC，共2層資料夾才能建立DD，所以會拋出錯誤並且不會作任何動作。
         def surveil(dirs,create_if_notexist= false,foundation=1)
-			p "begin surveil"
+			puts "begin surveil"
             dirs_notexist = Array.new
 			dirs.each do  |dir|
 				next if Dir.exist? dir
@@ -109,8 +95,8 @@ module Mineral
             #實際建立每一個資料夾
 			
 			dirs_tocreate.each do |dir|
-				next  p "folder #{dir} already exists skipping." if Dir.exist? dir
-				p "making dir=> #{dir}"
+				next  puts "folder #{dir} already exists skipping." if Dir.exist? dir
+				puts "making dir=> #{dir}"
                 Dir.mkdir(dir)
             end
         end
