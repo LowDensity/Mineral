@@ -10,6 +10,7 @@ module Mineral
         attr_reader :tgt        #目標資料夾
         attr_reader :vein       #vein資料夾的位置
         attr_reader :veinless   #不使用vein結構
+        attr_reader :insensible #是否包含最後的 press Enter to Exit
 
         def initialize(args)
             #先假設第0個元素一定是action。
@@ -35,8 +36,9 @@ module Mineral
             @base = @argmap["base"].nil?	?	nil	:	@argmap["base"][0].gsub(/\\+/, '/')
             @tgt =  @argmap["tgt"].nil?		?	nil	:	@argmap["tgt"][0].gsub(/\\+/, '/')
             @vein = @argmap["vein"].nil?	?	nil	:	@argmap["vein"][0].gsub(/\\+/, '/')
-            raise "option : -veinless is not implemented" if !@argmap["veinless"].nil? 
+            @insensible = !@argmap["insensible"].nil? #有寫才是 insensible，沒寫預設false	 
             @veinless =  false #尚未實作前先強制false
+            raise "option : -veinless is not implemented" if !@argmap["veinless"].nil? 
         end 
 
         #檢查指定的資料夾是否存在，如果不存在，是否要建立。

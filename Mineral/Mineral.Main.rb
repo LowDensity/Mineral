@@ -21,7 +21,7 @@ module Mineral
 
 
 end
-puts "Mineral , version #{MINERAL_VERSION}."
+puts "Mineral , version #{MINERAL_VERSION}"
 puts '======LOADING START====='
 require_relative 'Mineral.Geology'
 require_relative 'Mineral.Form'
@@ -32,15 +32,15 @@ begin
     
     geo=Mineral::Geology.new(ARGV)
     raise "Unknown action : #{ARGV[0]} " if !Mineral.actions.include?(geo.action)
-    Mineral.send(geo.action,geo)
-    
+    Mineral.send(geo.action,geo)    
     ARGV.clear
+	puts "All done , press Enter to exit"
+	STDIN.getc if !geo.insensible
 rescue Exception => ex
     puts ex.message
     puts ex.backtrace
 end
 
-puts "All done , press Enter to exit"
-STDIN.getc
+
     
 

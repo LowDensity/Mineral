@@ -4,7 +4,7 @@ require 'Pathname'
 
 module Mineral
 
-    print_version "Mineral.Form.rb" , 0 , 2 , 1
+    print_version "Mineral.Form.rb" , 0 , 2 , 3
         
     @@actions.push(:form)
     def self.form(geo)
@@ -30,9 +30,8 @@ module Mineral
 	
 	
     #先找出直接的資料夾
-    base_entries= Dir.glob("**/*",base:geo.base)
-    tgt_entries = Dir.glob("**/*",base:tgt_dir)
-        
+    base_entries= Dir.glob("**/*",base:geo.base).select do |ent|  !File.directory? File.join(geo.base,ent) end
+    tgt_entries = Dir.glob("**/*",base:tgt_dir).select do |ent|  !File.directory? File.join(geo.base,ent) end
         
     tgt_only =  tgt_entries - base_entries # 刪除目標資料夾中的檔案，並且移動到deleted資料夾中
     base_only = base_entries - tgt_entries #複製base_only到目標資料夾，並加入倒目標資料夾的ADD區塊中。
@@ -68,9 +67,11 @@ module Mineral
     count =0
     base_only.each{
         |ent|
+		base_ent = File.join(geo.base,ent)
+		#next if File.directory?(base_ent)
         count=Mineral.print_counter(count)
-        FileUtils.cp(File.join(geo.base,ent)  ,tgt_dir)
-        FileUtils.cp(File.join(geo.base,ent)  ,vein_added_dir)
+        FileUtils.cp(base_ent  ,tgt_dir)
+        FileUtils.cp(base_ent  ,vein_added_dir)
     }
 	print "\r\n"
     
@@ -78,8 +79,9 @@ module Mineral
     count=0
     change_entries.each{
         |ent|
-        count=Mineral.print_counter(count)
         base_ent = File.join(geo.base,ent)
+		#next if File.directory?(base_ent)
+        count=Mineral.print_counter(count)
         tgt_ent = File.join(tgt_dir,ent)
         FileUtils.cp(base_ent,vein_changed_dir) 
         FileUtils.cp(base_ent,tgt_ent) 
@@ -90,8 +92,9 @@ module Mineral
     count=0
     tgt_only.each{
         |ent|
-		count=Mineral.print_counter(count)
         tgt_ent =File.join(tgt_dir,ent)
+		#next if File.directory?(tgt_ent)
+		count=Mineral.print_counter(count)
         FileUtils.cp(tgt_ent,vein_deleted_dir)
         FileUtils.rm(tgt_ent)
     }
